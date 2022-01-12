@@ -187,13 +187,15 @@ func main() {
 
 	updater, err := updatehandler.New(cfg, db, db)
 	if err != nil {
-		log.Fatalf("Can't create updater: %s", aoserrors.Wrap(err))
+		log.Errorf("Can't create updater: %s", aoserrors.Wrap(err))
+		return
 	}
 	defer updater.Close()
 
 	client, err := umclient.New(cfg, updater, false)
 	if err != nil {
-		log.Fatalf("Can't create UM client: %s", aoserrors.Wrap(err))
+		log.Errorf("Can't create UM client: %s", aoserrors.Wrap(err))
+		return
 	}
 	defer client.Close()
 
