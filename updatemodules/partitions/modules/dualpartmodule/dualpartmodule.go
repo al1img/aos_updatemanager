@@ -78,6 +78,8 @@ const (
 	updatedState
 )
 
+const supportedPartitions = 2
+
 /*******************************************************************************
  * Types
  ******************************************************************************/
@@ -151,7 +153,7 @@ func New(id string, partitions []string, versionFile string, controller StateCon
 		versionFile:   versionFile,
 	}
 
-	if len(partitions) != 2 {
+	if len(partitions) != supportedPartitions {
 		return nil, aoserrors.New("num of configured partitions should be 2")
 	}
 
