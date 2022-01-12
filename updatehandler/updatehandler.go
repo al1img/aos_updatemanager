@@ -814,8 +814,12 @@ func (handler *Handler) onRevertState(event *fsm.Event) {
 
 	if err := handler.componentOperation(func(module UpdateModule) (rebootRequired bool, err error) {
 		log.WithFields(log.Fields{"id": module.GetID()}).Debug("Revert component")
+		rebootRequired, err = module.Revert()
+		if err != nil {
+			return rebootRequired, aoserrors.Wrap(err)
+		}
 
-		return module.Revert()
+		return rebootRequired, nil
 	}, false); err != nil {
 		log.Errorf("Can't revert update: %s", aoserrors.Wrap(err))
 		handler.state.Error = err.Error()
