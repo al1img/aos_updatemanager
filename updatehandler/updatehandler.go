@@ -22,6 +22,7 @@ import (
 	"aos_updatemanager/umclient"
 	"context"
 	"encoding/json"
+	"errors"
 	"net/url"
 	"os"
 	"sort"
@@ -835,7 +836,8 @@ func (handler *Handler) sendEvent(event string, args ...interface{}) (err error)
 	}
 
 	if err = handler.fsm.Event(event, args...); err != nil {
-		if _, ok := err.(fsm.AsyncError); !ok {
+		var fsmError fsm.AsyncError
+		if !errors.As(err, &fsmError) {
 			return aoserrors.Wrap(err)
 		}
 
