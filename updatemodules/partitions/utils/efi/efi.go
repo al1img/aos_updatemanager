@@ -716,7 +716,7 @@ func parseMediaType(subType uint8, data []byte) (dp interface{}, err error) {
 
 		return hd, nil
 	default:
-		return nil, nil
+		return nil, aoserrors.Errorf("unknown media type: %d", subType)
 	}
 }
 
