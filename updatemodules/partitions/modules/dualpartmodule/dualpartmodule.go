@@ -146,6 +146,8 @@ func New(id string, partitions []string, versionFile string, controller StateCon
 ) (updateModule updatehandler.UpdateModule, err error) {
 	log.WithField("module", id).Debug("Create dualpart module")
 
+	log.Debug("PARTITIONS: ", partitions)
+
 	module := &DualPartModule{
 		id:            id,
 		partitions:    partitions,
